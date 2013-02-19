@@ -128,8 +128,10 @@ class MPL115A2 :
 
   def getPT(self):
     "Read Temperature and Pressure"
+    self.i2c.write8(0xC0,0x00)
     self.i2c.write8(self.__MPL115A2_REGISTER_STARTCONVERSION, 0x00)
     time.sleep(0.005) # Wait 5ms
+    self.i2c.write8(0xC1,0x00)
     #self.i2c.write8(self.__MPL115A2_REGISTER_PRESSURE_MSB, 0x00)
     pressure = ((self.i2c.readU8(self.__MPL115A2_REGISTER_PRESSURE_MSB) << 8) | self.i2c.readU8(self.__MPL115A2_REGISTER_PRESSURE_LSB)) >> 6
     temp = ((self.i2c.readU8(self.__MPL115A2_REGISTER_TEMP_MSB) << 8) | self.i2c.readU8(self.__MPL115A2_REGISTER_TEMP_LSB)) >> 6
