@@ -130,9 +130,9 @@ class MPL115A2 :
     "Read Temperature and Pressure"
     self.i2c.write8(self.__MPL115A2_REGISTER_STARTCONVERSION, 0x00)
     time.sleep(0.005) # Wait 5ms
-    self.i2c.write8(self.__MPL115A2_REGISTER_PRESSURE_MSB, 0x00)
-    pressure = ((self.i2c.readU8(0x00) << 8) | self.i2c.readU8(0x00)) >> 6
-    temp = ((self.i2c.readU8(0x00) << 8) | self.i2c.readU8(0x00)) >> 6
+    #self.i2c.write8(self.__MPL115A2_REGISTER_PRESSURE_MSB, 0x00)
+    pressure = ((self.i2c.readU8(self.__MPL115A2_REGISTER_PRESSURE_MSB) << 8) | self.i2c.readU8(self.__MPL115A2_REGISTER_PRESSURE_LSB)) >> 6
+    temp = ((self.i2c.readU8(self.__MPL115A2_REGISTER_TEMP_MSB) << 8) | self.i2c.readU8(self.__MPL115A2_REGISTER_TEMP_LSB)) >> 6
 
     pressureComp = self._mpl115a2_a0 + (self._mpl115a2_b1 + self._mpl115a2_c12 * temp) * pressure + self._mpl115a2_b2 * temp
     P = ((65.0 / 1023) * pressureComp) + 50.0
