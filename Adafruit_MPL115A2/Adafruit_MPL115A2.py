@@ -107,6 +107,11 @@ class MPL115A2 :
     self._mpl115a2_c12 = self.i2c.readS16(self.__MPL115A2_REGISTER_C12_COEFF_MSB)   # INT16
     self._mpl115a2_c12 = self._mpl115a2_b2 << 8 | self.i2c.readS16(self.__MPL115A2_REGISTER_C12_COEFF_LSB)   # INT16
 
+    self._mpl115a2_a0 /= 8
+    self._mpl115a2_b1 /= 8192
+    self._mpl115a2_b2 /= 16384
+    self._mpl115a2_a0 /= 4194304.0
+    
     if (self.debug):
       self.showCalibrationData()
 
