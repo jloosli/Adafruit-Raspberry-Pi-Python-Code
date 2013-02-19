@@ -126,6 +126,21 @@ class MPL115A2 :
       print "DBG: Raw Temp: 0x%04X (%d)" % (raw & 0xFFFF, raw)
     return raw
 
+  def getPT(self):
+    "Read Temperature and Pressure"
+    self.i2c.write8(self.__MPL115A2_REGISTER_STARTCONVERSION)
+    self.i2c.write8(0x00)
+    time.sleep(0.005) # Wait 5ms
+    self.i2c.write8(self.__MPL115A2_REGISTER_PRESSURE_MSB)
+    pressure = ((self.i2c.readU8() << 8) | self.i2c.readU8()) >> 6
+    temp = ((self.i2c.readU8() << 8) | self.i2c.readU8()) >> 6
+
+    pressureComp = self._mpl115a2_a0 + (self._mpl115a2_b1 + self._mpl115a2_c12 * temp) * pressure + self._mpl115a2_b2 * temp
+    P = ((65.0 / 1023) * pressureComp) + 50.0
+    T = ((temp - 498.0) / -5.35 + 25.0)
+    return P,T
+
+
   def readRawPressure(self):
     "Reads the raw (uncompensated) pressure level from the sensor"
     self.i2c.write8(self.__BMP085_CONTROL, self.__BMP085_READPRESSURECMD + (self.mode << 6))
