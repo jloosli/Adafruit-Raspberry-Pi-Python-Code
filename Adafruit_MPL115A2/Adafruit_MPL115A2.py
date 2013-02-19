@@ -120,6 +120,7 @@ class MPL115A2 :
   def showCalibrationData(self):
       "Displays the calibration values for debugging purposes"
       print "DBG: A0 = %f" % (self._mpl115a2_a0)
+      print(self._mpl115a2_a0)
       print "DBG: B1 = %f" % (self._mpl115a2_b1)
       print "DBG: B2 = %f" % (self._mpl115a2_b2)
       print "DBG: C12 = %f" % (self._mpl115a2_c12)
