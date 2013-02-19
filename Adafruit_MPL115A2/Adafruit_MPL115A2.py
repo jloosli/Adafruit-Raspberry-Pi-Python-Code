@@ -112,7 +112,7 @@ class MPL115A2 :
     print(self._mpl115a2_a0)
     self._mpl115a2_b1 /= 8192.0
     self._mpl115a2_b2 /= 16384.0
-    self._mpl115a2_a0 /= 4194304.0
+    self._mpl115a2_c12 /= 4194304.0
 
     if (self.debug):
       self.showCalibrationData()
