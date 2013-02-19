@@ -114,7 +114,7 @@ class MPL115A2 :
     self._mpl115a2_b1 /= 8192.0
     self._mpl115a2_b2 /= 16384.0
     self._mpl115a2_c12 /= 4194304.0
-    self._mpl115a2_c12 /= 10**9
+    #self._mpl115a2_c12 /= 10**9
 
     if (self.debug):
       self.showCalibrationData()
@@ -149,7 +149,7 @@ class MPL115A2 :
     pressureComp = self._mpl115a2_a0 + (self._mpl115a2_b1 + self._mpl115a2_c12 * temp) * pressure + self._mpl115a2_b2 * temp
     P = ((65.0 / 1023) * pressureComp) + 50.0
     T = ((temp - 498.0) / -5.35 + 25.0)
-    return P,T
+    return P,T, temp
 
 
   def readRawPressure(self):
