@@ -23,5 +23,6 @@ temp, pressure = mpl.getPT()
 # altitude = mpl.readAltitude()
 
 print "Temperature: %.2f C" % temp
+print "Temperature: %.2f F" % (temp * 9 / 5 + 32)
 print "Pressure:    %.2f hPa" % (pressure / 100.0)
 #print "Altitude:    %.2f" % altitude
