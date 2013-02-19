@@ -8,6 +8,7 @@ from Adafruit_LEDBackpack import LEDBackpack
 # 8x8 Pixel Display
 # ===========================================================================
 
+
 class EightByEight:
   disp = None
 

@@ -2,6 +2,7 @@
 
 import time
 import datetime
+from random import randrange
 from Adafruit_8x8 import EightByEight
 import Adafruit_LEDBackpack
 
@@ -21,6 +22,14 @@ while(True):
   for x in range(0, 8):
     for y in range(0, 8):
       grid.setPixel(x, y)
+      time.sleep(0.05)
+  time.sleep(0.5)
+  grid.clear()
+  time.sleep(0.5)
+
+  for x in range(0,8):
+    for y in range(0,8):
+      grid.setPixel(randrange(8), randrange(8))
       time.sleep(0.05)
   time.sleep(0.5)
   grid.clear()
