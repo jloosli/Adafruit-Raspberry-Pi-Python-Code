@@ -117,10 +117,10 @@ class MPL115A2 :
 
   def showCalibrationData(self):
       "Displays the calibration values for debugging purposes"
-      print "DBG: A0 = %6d" % (self._mpl115a2_a0)
-      print "DBG: B1 = %6d" % (self._mpl115a2_b1)
-      print "DBG: B2 = %6d" % (self._mpl115a2_b2)
-      print "DBG: C12 = %6d" % (self._mpl115a2_c12)
+      print "DBG: A0 = %f" % (self._mpl115a2_a0)
+      print "DBG: B1 = %f" % (self._mpl115a2_b1)
+      print "DBG: B2 = %f" % (self._mpl115a2_b2)
+      print "DBG: C12 = %f" % (self._mpl115a2_c12)
 
   def readRawTemp(self):
     "Reads the raw (uncompensated) temperature from the sensor"
