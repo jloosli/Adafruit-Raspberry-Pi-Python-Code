@@ -82,13 +82,13 @@ class MPL115A2 :
     self.address = address
     self.debug = debug
     # Make sure the specified mode is in the appropriate range
-    if ((mode < 0) | (mode > 3)):
-      if (self.debug):
-        print "Invalid Mode: Using STANDARD by default"
-      self.mode = self.__BMP085_STANDARD
-    else:
-      self.mode = mode
-    # Read the calibration data
+    # if ((mode < 0) | (mode > 3)):
+    #   if (self.debug):
+    #     print "Invalid Mode: Using STANDARD by default"
+    #   self.mode = self.__BMP085_STANDARD
+    # else:
+    #   self.mode = mode
+    # # Read the calibration data
     self.readCalibrationData()
 
   def readCalibrationData(self):
