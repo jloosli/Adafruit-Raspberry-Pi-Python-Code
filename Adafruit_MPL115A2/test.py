@@ -17,8 +17,8 @@ mlp = MPL115A2(0x60, debug=True)
 # bmp = BMP085(0x77, 3)  # ULTRAHIRES Mode
 
 temp = mlp.readTemperature()
-pressure = bmp.readPressure()
-altitude = bmp.readAltitude()
+pressure = mlp.readPressure()
+altitude = mlp.readAltitude()
 
 print "Temperature: %.2f C" % temp
 print "Pressure:    %.2f hPa" % (pressure / 100.0)

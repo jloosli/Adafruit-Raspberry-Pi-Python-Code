@@ -77,7 +77,7 @@ class MPL115A2 :
   
   # Constructor
   def __init__(self, address=0x60, mode=1, debug=False):
-    self.i2c = Adafruit_I2C(address)
+    self.i2c = Adafruit_I2C(address, debug=debug)
 
     self.address = address
     self.debug = debug
