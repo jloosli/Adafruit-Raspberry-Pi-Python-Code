@@ -16,7 +16,7 @@ mpl = MPL115A2(0x60, debug=True)
 # bmp = BMP085(0x77, 2)  # HIRES Mode
 # bmp = BMP085(0x77, 3)  # ULTRAHIRES Mode
 
-temp, pressure = mpl.getPT()
+temp, pressure, temp2 = mpl.getPT()
 
 # temp = mpl.readTemperature()
 # pressure = mpl.readPressure()
@@ -24,5 +24,7 @@ temp, pressure = mpl.getPT()
 
 print "Temperature: %.2f C" % temp
 print "Temperature: %.2f F" % (temp * 9 / 5 + 32)
+print "Temperature: %.2f C" % temp2
+print "Temperature: %.2f F" % (temp2 * 9 / 5 + 32)
 print "Pressure:    %.2f hPa" % (pressure / 100.0)
 #print "Altitude:    %.2f" % altitude
