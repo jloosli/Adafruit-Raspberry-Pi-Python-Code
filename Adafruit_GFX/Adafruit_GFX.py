@@ -32,7 +32,7 @@ class Adafruit_GFX:
     wrap = true
 
   ''' draw a circle outline '''
-  def drawCircle(x0, y0, r, color):
+  def drawCircle(self, x0, y0, r, color):
     f = 1 - r
     ddF_x = 1
     ddF_y = -2 * r
@@ -63,7 +63,7 @@ class Adafruit_GFX:
       drawPixel(x0 + y, y0 - x, color)
       drawPixel(x0 - y, y0 - x, color)
 
-  def drawCircleHelper( x0, y0, r, cornername, ucolor):
+  def drawCircleHelper(self,  x0, y0, r, cornername, ucolor):
     f     = 1 - r
     ddF_x = 1
     ddF_y = -2 * r
@@ -95,13 +95,13 @@ class Adafruit_GFX:
         drawPixel(x0 - y, y0 - x, color)
         drawPixel(x0 - x, y0 - y, color)
       
-  def fillCircle(x0, y0, r, ucolor):
+  def fillCircle(self, x0, y0, r, ucolor):
     drawFastVLine(x0, y0-r, 2*r+1, color)
     fillCircleHelper(x0, y0, r, 3, 0, color)
 
 
 ''' used to do circles and roundrects!'''
-  def fillCircleHelper(x0, y0, r, cornername, delta, ucolor):
+  def fillCircleHelper(self, x0, y0, r, cornername, delta, ucolor):
 
     f     = 1 - r
     ddF_x = 1
@@ -111,11 +111,11 @@ class Adafruit_GFX:
 
     while (x<y) :
       if (f >= 0) :
-        y--
+        y -= 1
         ddF_y += 2
         f     += ddF_y
 
-      x++
+      x += 1
       ddF_x += 2
       f     += ddF_x
 
@@ -128,7 +128,7 @@ class Adafruit_GFX:
         drawFastVLine(x0-y, y0-x, 2*x+1+delta, color)
 
 ''' bresenham's algorithm - thx wikpedia'''
-  def drawLine(x0, y0, x1, y1, ucolor):
+  def drawLine(self, x0, y0, x1, y1, ucolor):
     steep = abs(y1 - y0) > abs(x1 - x0)
     if (steep) :
       swap(x0, y0)
@@ -162,33 +162,33 @@ class Adafruit_GFX:
         err += dx
 
 ''' draw a rectangle'''
-  def drawRect(x, y, w, h, ucolor):
+  def drawRect(self, x, y, w, h, ucolor):
     drawFastHLine(x, y, w, color)
     drawFastHLine(x, y+h-1, w, color)
     drawFastVLine(x, y, h, color)
     drawFastVLine(x+w-1, y, h, color)
 
 
-  def drawFastVLine(x, y, h, ucolor) :
+  def drawFastVLine(self, x, y, h, ucolor) :
   ''' stupidest version - update in subclasses if desired!'''
     drawLine(x, y, x, y+h-1, color)
 
 
-  def drawFastHLine(x, y, w, ucolor) :
+  def drawFastHLine(self, x, y, w, ucolor) :
   ''' stupidest version - update in subclasses if desired!'''
     drawLine(x, y, x+w-1, y, color)
 
-  def fillRect(x, y, w, h, ucolor) :
+  def fillRect(self, x, y, w, h, ucolor) :
   ''' stupidest version - update in subclasses if desired!'''
     for (i=x i<x+w i++) :
       drawFastVLine(i, y, h, color) 
 
 
-  def fillScreen(ucolor) :
+  def fillScreen(self, ucolor) :
     fillRect(0, 0, _width, _height, color)
 
 ''' draw a rounded rectangle!'''
-  def drawRoundRect(x, y, w, h, r, ucolor) :
+  def drawRoundRect(self, x, y, w, h, r, ucolor) :
   ''' smarter version'''
     drawFastHLine(x+r  , y    , w-2*r, color) ''' Top'''
     drawFastHLine(x+r  , y+h-1, w-2*r, color) ''' Bottom'''
@@ -202,7 +202,7 @@ class Adafruit_GFX:
 
 
 ''' fill a rounded rectangle!'''
-  def fillRoundRect(x, y, w, h, r, ucolor):
+  def fillRoundRect(self, x, y, w, h, r, ucolor):
   ''' smarter version'''
     fillRect(x+r, y, w-2*r, h, color)
 
@@ -211,13 +211,13 @@ class Adafruit_GFX:
     fillCircleHelper(x+r    , y+r, r, 2, h-2*r-1, color)
 
 ''' draw a triangle!'''
-  def drawTriangle(x0, y0, x1, y1, x2, y2, ucolor):
+  def drawTriangle(self, x0, y0, x1, y1, x2, y2, ucolor):
     drawLine(x0, y0, x1, y1, color)
     drawLine(x1, y1, x2, y2, color)
     drawLine(x2, y2, x0, y0, color)
 
 ''' fill a triangle!'''
-  def fillTriangle ( x0, y0, x1, y1, x2, y2, ucolor):
+  def fillTriangle (self,  x0, y0, x1, y1, x2, y2, ucolor):
 
     a, b, y, last
 
@@ -289,7 +289,7 @@ class Adafruit_GFX:
       if(a > b) swap(a,b)
       drawFastHLine(a, y, b-a+1, color)
 
-  def drawBitmap(x, y, const *bitmap, w, h, ucolor) :
+  def drawBitmap(self, x, y, const *bitmap, w, h, ucolor) :
 
     i, j, byteWidth = (w + 7) / 8
 
@@ -299,7 +299,7 @@ class Adafruit_GFX:
   	drawPixel(x+i, y+j, color)
 
 
-  def write(c) :
+  def write(self, c) :
     if (c == '\n') :
       cursor_y += textsize*8
       cursor_x = 0
@@ -314,7 +314,7 @@ class Adafruit_GFX:
     return 1
 
 ''' draw a character'''
-  def drawChar(x, y, unsigned char c, ucolor, ubg, size) :
+  def drawChar(self, x, y, unsigned char c, ucolor, ubg, size) :
 
     if((x >= _width)            || ''' Clip right'''
        (y >= _height)           || ''' Clip bottom'''
@@ -342,38 +342,38 @@ class Adafruit_GFX:
             fillRect(x+i*size, y+j*size, size, size, bg)
         line >>= 1
 
-  def setCursor(x, y) :
+  def setCursor(self, x, y) :
     cursor_x = x
     cursor_y = y
 
 
 
-  def setTextSize(s) :
+  def setTextSize(self, s) :
     textsize = (s > 0) ? s : 1
 
 
 
-  def setTextColor(uc) :
+  def setTextColor(self, uc) :
     textcolor = c
     textbgcolor = c 
     ''' for 'transparent' background, we'll set the bg '''
     ''' to the same as fg instead of using a flag'''
 
 
-   def setTextColor(uc, ub) :
+   def setTextColor(self, uc, ub) :
      textcolor = c
      textbgcolor = b 
  
 
-  def setTextWrap(w) :
+  def setTextWrap(self, w) :
     wrap = w
 
-  def getRotation() :
+  def getRotation(self, ) :
     rotation %= 4
     return rotation
 
 
-  def setRotation(x) :
+  def setRotation(self, x) :
     x %= 4  ''' cant be higher than 3'''
     rotation = x
     switch (x) {
@@ -388,15 +388,15 @@ class Adafruit_GFX:
       _height = WIDTH
       break
 
-  def invertDisplay(i) :
+  def invertDisplay(self, i) :
   ''' do nothing, can be subclassed'''
     continue
 
 
   ''' return the size of the display which depends on the rotation!'''
-  def width() :
+  def width(self, ) :
     return _width 
   
  
-  def height(void) 
+  def height(self, void) 
     return _height 
