@@ -32,7 +32,7 @@ def run_cmd(cmd):
 ip = run_cmd(cmd)
 
 def type(theString):
-  for i in theString:
+  for i in theString.strip():
     print "Showing %s" % str(i)
     show(i)
 
@@ -42,4 +42,5 @@ def show(letter):
     grid.setPixel(*i)
   time.sleep(1)
 
-type(ip)
+for i in range(0,3):
+  type("..." + ip)
