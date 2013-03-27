@@ -53,7 +53,7 @@ else:
   print "Channel 1 = %.3f V" % (result * 0.0001875)
 
 while 1:
-  result = adc.readADCSingleEnded(1)
+  result = adc.readADCSingleEnded(0)
   val = result * 0.0001875
   steps = math.floor(val / 6.144 * 64)
   print "Channel 0 = %.3f V" % (result * 0.0001875)
