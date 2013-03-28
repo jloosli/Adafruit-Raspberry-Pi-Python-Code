@@ -33,12 +33,14 @@ ADS_Current = ADS1115
 adc = ADS1x15(ic=ADS_Current)
 
 dataset numeric, date text, ch0 real, ch1 real, ch2 real, ch3 real
-cur.execute("insert into samples(dataset,date,ch0,ch1,ch2,ch3) values (?, ?, ?, ?, ?)", 
-  (dataset, ts, ch[0],ch[1],ch[2],ch[3]))
 while 1:
   for i in range(0,4):
     result = adc.readADCSingleEnded(i)
     val = result * 0.0001875
+    ch[i]=val
+  cur.execute("insert into samples(dataset,date,ch0,ch1,ch2,ch3) values (?, ?, ?, ?, ?)", 
+      (dataset, ts, ch[0],ch[1],ch[2],ch[3]))
+
   steps = math.floor(val / 6.144 * 64)
   print "Channel 0 = %.3f V" % (val)
   print "Steps = %d" % (steps)
