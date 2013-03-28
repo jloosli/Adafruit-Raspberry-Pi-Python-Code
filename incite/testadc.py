@@ -2,7 +2,7 @@
 
 
 from Adafruit_ADS1x15 import ADS1x15
-import time, math
+import time, math, sqlite3
 import datetime
 from Adafruit_8x8 import EightByEight
 import Adafruit_LEDBackpack
@@ -32,29 +32,15 @@ ADS_Current = ADS1115
 # Initialise the ADC using the default mode (use default I2C address)
 adc = ADS1x15(ic=ADS_Current)
 
-# Read channel 0 in single-ended mode 
-result = adc.readADCSingleEnded(0)
-if ADS_Current == ADS1015:
-  # For ADS1015 at max range (+/-6.144V) 1 bit = 3mV (12-bit values)
-  print "Channel 0 = %.3f V" % (result * 0.003)
-else:
-  # For ADS1115 at max range (+/-6.144V) 1-bit = 0.1875mV (16-bit values)
-  print "Channel 0 = %.3f V" % (result * 0.0001875)
-
-# Read channel 1 in single-ended mode 
-result = adc.readADCSingleEnded(1)
-if ADS_Current == ADS1015:
-  # For ADS1015 at max range (+/-6.144V) 1 bit = 3mV (12-bit values)
-  print "Channel 1 = %.3f V" % (result * 0.003)
-else:
-  # For ADS1115 at max range (+/-6.144V) 1-bit = 0.1875mV (16-bit values)
-  print "Channel 1 = %.3f V" % (result * 0.0001875)
-
+dataset numeric, date text, ch0 real, ch1 real, ch2 real, ch3 real
+cur.execute("insert into samples(dataset,date,ch0,ch1,ch2,ch3) values (?, ?, ?, ?, ?)", 
+  (dataset, ts, ch[0],ch[1],ch[2],ch[3]))
 while 1:
-  result = adc.readADCSingleEnded(0)
-  val = result * 0.0001875
+  for i in range(0,4):
+    result = adc.readADCSingleEnded(i)
+    val = result * 0.0001875
   steps = math.floor(val / 6.144 * 64)
-  print "Channel 0 = %.3f V" % (result * 0.0001875)
+  print "Channel 0 = %.3f V" % (val)
   print "Steps = %d" % (steps)
   grid.clear()
   i=0
