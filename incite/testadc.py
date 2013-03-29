@@ -32,14 +32,33 @@ ADS_Current = ADS1115
 # Initialise the ADC using the default mode (use default I2C address)
 adc = ADS1x15(ic=ADS_Current)
 
-dataset numeric, date text, ch0 real, ch1 real, ch2 real, ch3 real
+conn = sqlite3.connect('data/samples.db')
+c = conn.cursor()
+
+c.execute('SELECT max(dataset) FROM samples')
+results = c.fetchone()
+print results
+dataset = results[0] if results[0] is not None else -1
+print dataset
+dataset += 1
+conn.commit()
+conn.close()
+
 while 1:
+  ch = [0,0,0,0]
   for i in range(0,4):
     result = adc.readADCSingleEnded(i)
     val = result * 0.0001875
     ch[i]=val
-  cur.execute("insert into samples(dataset,date,ch0,ch1,ch2,ch3) values (?, ?, ?, ?, ?)", 
+
+  conn = sqlite3.connect('data/samples.db')
+  c = conn.cursor()
+  ts = datetime.datetime.now()
+  c.execute("insert into samples(dataset,date,ch0,ch1,ch2,ch3) values (?, ?, ?, ?, ?, ?)", 
       (dataset, ts, ch[0],ch[1],ch[2],ch[3]))
+  conn.commit()
+  conn.close()
+
 
   steps = math.floor(val / 6.144 * 64)
   print "Channel 0 = %.3f V" % (val)
