@@ -22,6 +22,7 @@ while True:
         try:
             buffer = buffer.strip()
             cur.execute(buffer)
+            print cur.fetchall()
 
             if buffer.lstrip().upper().startswith("SELECT"):
                 print cur.fetchall()

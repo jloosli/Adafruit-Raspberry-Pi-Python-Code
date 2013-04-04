@@ -2,7 +2,7 @@
 
 
 from Adafruit_ADS1x15 import ADS1x15
-import time, math, sqlite3
+import time, math, sqlite3, os
 import datetime
 from Adafruit_8x8 import EightByEight
 import Adafruit_LEDBackpack
@@ -12,17 +12,17 @@ import Adafruit_LEDBackpack
 # ===========================================================================
 grid = EightByEight(address=0x70)
 led = Adafruit_LEDBackpack.LEDBackpack(0x70)
-led.setBrightness=1
+led.setBrightness = 1
 
 print "Press CTRL+Z to exit"
 
-display=0
+display = 0
 
 # ============================================================================
 # Example Code
 # ============================================================================
-ADS1015 = 0x00	# 12-bit ADC
-ADS1115 = 0x01	# 16-bit ADC
+ADS1015 = 0x00  # 12-bit ADC
+ADS1115 = 0x00  # 16-bit ADC
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # ToDo: Change the value below depending on which chip you're using!
@@ -32,8 +32,12 @@ ADS_Current = ADS1115
 # Initialise the ADC using the default mode (use default I2C address)
 adc = ADS1x15(ic=ADS_Current)
 
-conn = sqlite3.connect('data/samples.db')
+dir = os.path.dirname(__file__)
+filename = os.path.join(dir, '/data/samples.db')
+conn = sqlite3.connect('filename')
 c = conn.cursor()
+c.execute('SHOW databases')
+print c.fetchall()
 
 c.execute('SELECT max(dataset) FROM samples')
 results = c.fetchone()
