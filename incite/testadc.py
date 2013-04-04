@@ -32,9 +32,8 @@ ADS_Current = ADS1115
 # Initialise the ADC using the default mode (use default I2C address)
 adc = ADS1x15(ic=ADS_Current)
 
-theDir = os.path.dirname(__file__)
+theDir = os.path.dirname(os.path.abspath(__file__))
 filename = os.path.join(theDir, 'data/samples.db')
-print filename
 conn = sqlite3.connect(filename)
 c = conn.cursor()
 # c.execute('SHOW databases')
@@ -46,6 +45,9 @@ print results
 dataset = results[0] if results[0] is not None else -1
 print dataset
 dataset += 1
+c.execute('SELECT * FROM samples WHERE dataset = ?', (dataset - 1,))
+for row in c.fetchall():
+  print row
 conn.commit()
 conn.close()
 
@@ -56,7 +58,7 @@ while 1:
     val = result * 0.0001875
     ch[i]=val
 
-  conn = sqlite3.connect('data/samples.db')
+  conn = sqlite3.connect(filename)
   c = conn.cursor()
   ts = datetime.datetime.now()
   c.execute("insert into samples(dataset,date,ch0,ch1,ch2,ch3) values (?, ?, ?, ?, ?, ?)", 
