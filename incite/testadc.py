@@ -32,12 +32,13 @@ ADS_Current = ADS1115
 # Initialise the ADC using the default mode (use default I2C address)
 adc = ADS1x15(ic=ADS_Current)
 
-dir = os.path.dirname(__file__)
-filename = os.path.join(dir, '/data/samples.db')
-conn = sqlite3.connect('filename')
+theDir = os.path.dirname(__file__)
+filename = os.path.join(theDir, 'data/samples.db')
+print filename
+conn = sqlite3.connect(filename)
 c = conn.cursor()
-c.execute('SHOW databases')
-print c.fetchall()
+# c.execute('SHOW databases')
+# print c.fetchall()
 
 c.execute('SELECT max(dataset) FROM samples')
 results = c.fetchone()
