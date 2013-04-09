@@ -20,14 +20,14 @@ class Db:
         ''' use path relative to this file '''
         theDir = os.path.dirname(os.path.abspath(__file__))
         filename = os.path.join(theDir, dbpath)
-        self.conn = sqlite3.connect(dbpath)
-        self.c = self.conn.cursor
+        self.conn = sqlite3.connect(filename)
+        self.c = self.conn.cursor()
 
     
     def getDatasets(self):
-        self.c.execute("SELECT Distinct dataset from samples")
-        result = self.c.fetchall()
-        return result
+        self.c.execute("SELECT Distinct dataset from samples ORDER BY dataset")
+        for i in self.c.fetchall():
+            yield i
 
 
 
@@ -36,7 +36,11 @@ def main():
     global args
     db = Db('data/samples.db')
 
-    print(db.getDatasets())
+    print("Enter dataset:")
+
+    for i in db.getDatasets():
+        print (i[0])
+    
 
 if __name__ == '__main__':
     try:
