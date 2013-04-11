@@ -55,6 +55,7 @@ while 1:
   ch = [0,0,0,0]
   for i in range(0,4):
     result = adc.readADCSingleEnded(i)
+    print i, result
     val = result * 0.0001875
     ch[i]=val
 
@@ -68,7 +69,7 @@ while 1:
 
 
   steps = math.floor(val / 6.144 * 64)
-  print "Channel 0 = %.3f V" % (val)
+  print "Channels: %.3f, %.3f, %.3f, %.3f V" % (ch[0],ch[1],ch[2],ch[3])
   print "Steps = %d" % (steps)
   grid.clear()
   i=0
