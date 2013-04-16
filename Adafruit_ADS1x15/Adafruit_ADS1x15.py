@@ -220,6 +220,7 @@ class ADS1x15:
     result = self.i2c.readList(self.__ADS1015_REG_POINTER_CONVERT, 2)
 
     if self.debug:
+      print("Channel: ", channel)
       print("PGA: ")
       print(pga)
       print("Raw result:")
