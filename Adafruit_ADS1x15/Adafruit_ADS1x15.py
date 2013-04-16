@@ -202,6 +202,10 @@ class ADS1x15:
     # Set 'start single-conversion' bit
     config |= self.__ADS1015_REG_CONFIG_OS_SINGLE
 
+    if self.debug:
+      print ("Configuration sent:")
+      print (config)
+
     # Write config register to the ADC
     bytes = [(config >> 8) & 0xFF, config & 0xFF]
     self.i2c.writeList(self.__ADS1015_REG_POINTER_CONFIG, bytes)
@@ -214,6 +218,12 @@ class ADS1x15:
 
     # Read the conversion results
     result = self.i2c.readList(self.__ADS1015_REG_POINTER_CONVERT, 2)
+
+    if self.debug:
+      print("PGA: ")
+      print(pga)
+      print("Raw result:")
+      print(result)
     if (self.ic == self.__IC_ADS1015):
     	# Shift right 4 bits for the 12-bit ADS1015 and convert to mV
     	return ( ((result[0] << 8) | (result[1] & 0xFF)) >> 4 )*pga/2048.0
