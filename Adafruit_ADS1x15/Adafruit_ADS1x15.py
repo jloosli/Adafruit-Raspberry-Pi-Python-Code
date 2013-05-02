@@ -203,8 +203,8 @@ class ADS1x15:
     config |= self.__ADS1015_REG_CONFIG_OS_SINGLE
 
     if self.debug:
-      print ("Configuration sent:")
-      print (config)
+      print "\n\nChannel: %d" % channel
+      print "Configuration sent: 0x%x = %s" % (config, bin(config))
 
     # Write config register to the ADC
     bytes = [(config >> 8) & 0xFF, config & 0xFF]
@@ -219,23 +219,20 @@ class ADS1x15:
     # Read the conversion results
     result = self.i2c.readList(self.__ADS1015_REG_POINTER_CONVERT, 2)
 
-    if self.debug:
-      print("Channel: ", channel)
-      print("PGA: ")
-      print(pga)
-      print("Raw result:")
-      print(result)
     if (self.ic == self.__IC_ADS1015):
     	# Shift right 4 bits for the 12-bit ADS1015 and convert to mV
     	return ( ((result[0] << 8) | (result[1] & 0xFF)) >> 4 )*pga/2048.0
     else:
 	# Return a mV value for the ADS1115
 	# (Take signed values into account as well)
-	val = (result[0] << 8) | (result[1])
-	if val > 0x7FFF:
-	  return (val - 0xFFFF)*pga/32768.0
-	else:
-	  return ( (result[0] << 8) | (result[1]) )*pga/32768.0
+      val = (result[0] << 8) | (result[1])
+    if self.debug:
+      print "PGA: %d" % pga
+      print "Raw result: 0x%x = %s" % (val, bin(val))
+    if val > 0x7FFF:
+      return (val - 0xFFFF)*pga/32768.0
+    else:
+      return ( (result[0] << 8) | (result[1]) )*pga/32768.0
 	
 
   def readADCDifferential(self, chP=0, chN=1, pga=6144, sps=250):
